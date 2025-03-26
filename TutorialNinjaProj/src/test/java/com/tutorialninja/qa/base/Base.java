@@ -8,6 +8,7 @@ import java.util.Properties;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.edge.EdgeDriver;
+import org.openqa.selenium.edge.EdgeOptions;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.safari.SafariDriver;
 
@@ -50,7 +51,15 @@ public class Base {
 		}else if(browserName.equalsIgnoreCase("firefox")) {
 			driver=new FirefoxDriver();
 		}else if(browserName.equalsIgnoreCase("edge")) {
-			driver=new EdgeDriver();
+			//driver=new EdgeDriver();
+			
+			EdgeOptions options = new EdgeOptions();
+		       options.addArguments("--headless");  // Run in headless mode
+		       options.addArguments("--disable-gpu");
+		       options.addArguments("--no-sandbox");
+		       options.addArguments("--disable-dev-shm-usage");
+		       WebDriver driver = new EdgeDriver(options);
+		       
 		}else if(browserName.equalsIgnoreCase("safari")) {
 			driver=new SafariDriver();
 		}
