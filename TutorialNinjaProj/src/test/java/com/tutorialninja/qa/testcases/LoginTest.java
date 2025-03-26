@@ -171,6 +171,8 @@ public void	verifyLoginWithValidCredentials(String email, String password){
 		String  ele1= menuOption.get(i).getText();
 		
 		System.out.println(ele1);
+		System.out.println(ele1);
+		System.out.println(ele1);
 		
 	}
 	   
