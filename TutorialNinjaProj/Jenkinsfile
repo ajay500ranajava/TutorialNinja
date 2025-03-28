@@ -1,43 +1,75 @@
 pipeline {
-   agent any
-   stages {
-       stage('Clone') {
-           steps {
-               script {
-                   echo 'Cloning the repository...'
-                   git url: 'https://github.com/ajay500ranajava/TutorialNinja.git'
-               }
-           }
-       }
-       stage('Build') {
-           steps {
-               script {
-                   echo 'Building the project...'
-                   sh 'mvn clean install'
-               }
-           }
-       }
-       stage('Test') {
-           steps {
-               script {
-                   echo 'Running tests...'
-                   sh 'mvn test'
-               }
-           }
-       }
-       stage('Report') {
-           steps {
-               script {
-                   echo 'Generating TestNG report...'
-                   sh 'mvn surefire-report:report'
-               }
-           }
-           post {
-               always {
-                   archiveArtifacts artifacts: '**/target/surefire-reports/*.html', allowEmptyArchive: true
-                   junit '**/target/surefire-reports/*.xml'
-               }
-           }
-       }
-   }
-}
+
+    agent any
+
+    stages {
+
+        stage('Clone Repository') {
+
+            steps {
+
+                git url: 'https://github.com/ajay500ranajava/TutorialNinja.git', branch: 'main'
+
+            }
+
+        }
+
+        stage('Build') {
+
+            steps {
+
+                script {
+
+                    // Clean and build the project
+
+                    sh './mvnw clean compile'
+
+                }
+
+            }
+
+        }
+
+        stage('Run Tests') {
+
+            steps {
+
+                script {
+
+                    // Run Selenium tests using TestNG.xml
+
+                    sh './mvnw test -DsuiteXmlFile=src/test/resources/testng.xml'
+
+                }
+
+            }
+
+        }
+
+    }
+
+    post {
+
+        always {
+
+            // Archive test results
+
+            junit '**/target/surefire-reports/*.xml'
+
+        }
+
+        success {
+
+            echo 'Build and tests executed successfully!'
+
+        }
+
+        failure {
+
+            echo 'Build or tests failed.'
+
+        }
+
+    }
+
+} 
