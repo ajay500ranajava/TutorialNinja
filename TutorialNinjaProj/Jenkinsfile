@@ -1,0 +1,43 @@
+pipeline {
+   agent any
+   stages {
+       stage('Clone') {
+           steps {
+               script {
+                   echo 'Cloning the repository...'
+                   git url: 'https://github.com/ajay500ranajava/TutorialNinja.git'
+               }
+           }
+       }
+       stage('Build') {
+           steps {
+               script {
+                   echo 'Building the project...'
+                   sh 'mvn clean install'
+               }
+           }
+       }
+       stage('Test') {
+           steps {
+               script {
+                   echo 'Running tests...'
+                   sh 'mvn test'
+               }
+           }
+       }
+       stage('Report') {
+           steps {
+               script {
+                   echo 'Generating TestNG report...'
+                   sh 'mvn surefire-report:report'
+               }
+           }
+           post {
+               always {
+                   archiveArtifacts artifacts: '**/target/surefire-reports/*.html', allowEmptyArchive: true
+                   junit '**/target/surefire-reports/*.xml'
+               }
+           }
+       }
+   }
+}

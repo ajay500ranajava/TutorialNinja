@@ -53,12 +53,13 @@ public class Base {
 		}else if(browserName.equalsIgnoreCase("edge")) {
 			//driver=new EdgeDriver();
 			
+			
 			EdgeOptions options = new EdgeOptions();
 		       options.addArguments("--headless");  // Run in headless mode
 		       options.addArguments("--disable-gpu");
 		       options.addArguments("--no-sandbox");
 		       options.addArguments("--disable-dev-shm-usage");
-		       WebDriver driver = new EdgeDriver(options);
+		       driver = new EdgeDriver(options);
 		       
 		}else if(browserName.equalsIgnoreCase("safari")) {
 			driver=new SafariDriver();
