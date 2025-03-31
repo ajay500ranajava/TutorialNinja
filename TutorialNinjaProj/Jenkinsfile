@@ -30,7 +30,7 @@ pipeline {
 
                     // Clean and build the project
 
-                    sh './mvnw clean compile'
+                    sh 'mvn clean compile'
 
                 }
 
@@ -46,7 +46,7 @@ pipeline {
 
                     // Run Selenium tests using TestNG.xml
 
-                    sh './mvnw test -DsuiteXmlFile=src/test/resources/testng.xml'
+                    sh 'mvn test -DsuiteXmlFile=src/test/resources/testng.xml'
 
                 }
 
