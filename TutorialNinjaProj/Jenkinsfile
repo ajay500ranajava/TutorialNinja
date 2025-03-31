@@ -1,83 +1,51 @@
 pipeline {
-
-    agent any
-
-  environment {
+   agent any
+   environment {
        HUB_URL = "http://65.2.186.123:4444/wd/hub"
        BROWSER_NAME = "edge"
        HEADLESS_MODE = "--headless"
-
    }
-
-
-    stages {
-
-        stage('Clone Repository') {
-
-            steps {
-
-                git url: 'https://github.com/ajay500ranajava/TutorialNinja.git', branch: 'main'
-
-            }
-
-        }
-
-        stage('Build') {
-
-            steps {
-
-                script {
-
-                    // Clean and build the project
-
-                    sh './mvnw clean compile'
-
-                }
-
-            }
-
-        }
-
-        stage('Run Tests') {
-
-            steps {
-
-                script {
-
-                    // Run Selenium tests using TestNG.xml
-
-                    sh './mvnw test -DsuiteXmlFile=src/test/resources/testng.xml'
-
-                }
-
-            }
-
-        }
-
-    }
-
-    post {
-
-        always {
-
-            // Archive test results
-
-            junit '**/target/surefire-reports/*.xml'
-
-        }
-
-        success {
-
-            echo 'Build and tests executed successfully!'
-
-        }
-
-        failure {
-
-            echo 'Build or tests failed.'
-
-        }
-
-    }
+   stages {
+       stage('Clone Repository') {
+           steps {
+               git url: 'https://github.com/ajay500ranajava/TutorialNinja.git', branch: 'main'
+           }
+       }
+       stage('Build') {
+           steps {
+               script {
+                   // Change to the correct directory and clean and build the project
+                   dir('TutorialNinjaProj') {
+                       sh './mvnw clean compile'
+                   }
+               }
+           }
+       }
+       stage('Run Tests') {
+           steps {
+               script {
+                   // Run Selenium tests using TestNG.xml from the correct directory
+                   dir('TutorialNinjaProj') {
+                       sh './mvnw test -DsuiteXmlFile=src/test/resources/testng.xml'
+                   }
+               }
+           }
+       }
+   }
+   post {
+       always {
+           // Archive test results from the correct directory
+           dir('TutorialNinjaProj') {
+               junit '**/target/surefire-reports/*.xml'
+           }
+       }
+       success {
+           echo 'Build and tests executed successfully!'
+       }
+       failure {
+           echo 'Build or tests failed.'
+       }
+   }
+}
 
 } 
