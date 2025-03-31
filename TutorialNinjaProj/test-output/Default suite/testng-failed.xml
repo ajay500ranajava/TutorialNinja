@@ -5,7 +5,12 @@
     <classes>
       <class name="com.tutorialninja.qa.testcases.LoginTest">
         <methods>
+          <include name="verifyLoginWithInValidEmailandValidPassword"/>
+          <include name="verifyLoginWithInvalidCredentials"/>
+          <include name="verifyLoginWithValidCredentials"/>
+          <include name="VerifyLoginWithoutCredentials"/>
           <include name="tearDown"/>
+          <include name="VerifyLoginWithValidEmailandInvalidPassword"/>
           <include name="tableDataFetch"/>
           <include name="setUp"/>
         </methods>

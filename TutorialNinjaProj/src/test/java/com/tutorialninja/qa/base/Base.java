@@ -2,6 +2,8 @@ package com.tutorialninja.qa.base;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.time.Duration;
 import java.util.Properties;
 
@@ -10,6 +12,7 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.edge.EdgeDriver;
 import org.openqa.selenium.edge.EdgeOptions;
 import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.remote.RemoteWebDriver;
 import org.openqa.selenium.safari.SafariDriver;
 
 import com.tutorialninja.qa.utils.Utilities;
@@ -42,7 +45,7 @@ public class Base {
       }
   
   
-	public WebDriver initializeBrowserAndOpenApplicationURL(String browserName){
+	public WebDriver initializeBrowserAndOpenApplicationURL(String browserName) throws Exception{
 		
      
 		
@@ -51,7 +54,10 @@ public class Base {
 		}else if(browserName.equalsIgnoreCase("firefox")) {
 			driver=new FirefoxDriver();
 		}else if(browserName.equalsIgnoreCase("edge")) {
-			//driver=new EdgeDriver();
+			//driver=new EdgeDriver();    // for Edge Browser
+			
+			 String hubUrl = "http://http://65.2.186.123:4444/wd/hub";  // Replace <hub-ip> with your Hub IP address
+			 
 			
 			
 			EdgeOptions options = new EdgeOptions();
@@ -59,7 +65,8 @@ public class Base {
 		       options.addArguments("--disable-gpu");
 		       options.addArguments("--no-sandbox");
 		       options.addArguments("--disable-dev-shm-usage");
-		       driver = new EdgeDriver(options);
+//		       driver = new EdgeDriver(options);
+			   driver = new RemoteWebDriver(new URL(hubUrl), options);
 		       
 		}else if(browserName.equalsIgnoreCase("safari")) {
 			driver=new SafariDriver();

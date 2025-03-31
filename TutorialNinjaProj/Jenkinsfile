@@ -2,6 +2,14 @@ pipeline {
 
     agent any
 
+  environment {
+       HUB_URL = "http://65.2.186.123:4444/wd/hub"
+       BROWSER_NAME = "edge"
+       HEADLESS_MODE = "--headless"
+
+   }
+
+
     stages {
 
         stage('Clone Repository') {
