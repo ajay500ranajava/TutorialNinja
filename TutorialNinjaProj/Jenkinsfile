@@ -16,6 +16,8 @@ pipeline {
                script {
                    // Navigate to the project directory and build
                    dir('TutorialNinjaProj') {
+                       // Grant execute permission to the mvnw file
+                       sh 'chmod +x mvnw'
                        sh './mvnw clean compile'
                    }
                }
