@@ -24,7 +24,7 @@ public	RegisterTest(){
 
 	
 	@BeforeMethod
-	public void setUp(){
+	public void setUp() throws Exception{
 		driver=initializeBrowserAndOpenApplicationURL(prop.getProperty("browserName"));
 		HomePage homePage=new HomePage(driver);
 		homePage.clickOnMyAccount();

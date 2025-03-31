@@ -20,7 +20,7 @@ public class SearchTest extends Base{
 	
 	
 	@BeforeMethod
-public void	setUp(){
+public void	setUp() throws Exception{
 		driver=initializeBrowserAndOpenApplicationURL(prop.getProperty("browserName"));
 	}
 	
