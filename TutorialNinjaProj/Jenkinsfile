@@ -3,10 +3,10 @@ pipeline {
    tools {
        // Use the Maven version configured in Jenkins
        maven 'Maven3'
-       jdk 'Eclipse Temurin'  // Use the JDK version configured in Jenkins
+       jdk 'jdk17'  // Use the JDK version configured in Jenkins
    }
    environment {
-       MVN_HOME = tool 'Maven3'
+       MVN_HOME = tool 'Maven'
        JAVA_HOME = tool 'Eclipse Temurin'
        PATH = "${JAVA_HOME}/bin:${PATH}"
    }
