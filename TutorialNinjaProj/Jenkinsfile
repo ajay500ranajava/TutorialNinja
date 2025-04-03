@@ -1,9 +1,14 @@
 pipeline {
    agent any
+   tools {
+       // Use the Maven version configured in Jenkins
+       maven 'Maven3'
+       jdk 'Eclipse Temurin'  // Use the JDK version configured in Jenkins
+   }
    environment {
-       HUB_URL = "http://65.2.186.123:4444/wd/hub"
-       BROWSER_NAME = "edge"
-       HEADLESS_MODE = "--headless"
+       MVN_HOME = tool 'Maven3'
+       JAVA_HOME = tool 'Eclipse Temurin'
+       PATH = "${JAVA_HOME}/bin:${PATH}"
    }
    stages {
        stage('Clone Repository') {
@@ -14,36 +19,27 @@ pipeline {
        stage('Build') {
            steps {
                script {
-                   // Navigate to the project directory and build
-                   dir('TutorialNinjaProj') {
-                       // Grant execute permission to the mvnw file
-                       sh 'chmod +x ./mvnw'
-                       sh './mvnw clean compile'
-                   }
+                   sh "${MVN_HOME}/bin/mvn clean compile"
                }
            }
        }
        stage('Run Tests') {
            steps {
                script {
-                   // Navigate to the project directory and run tests
-                   dir('TutorialNinjaProj') {
-                       sh './mvnw test -DsuiteXmlFile=src/test/resources/testng.xml'
-                   }
+                   sh "${MVN_HOME}/bin/mvn test"
                }
+           }
+       }
+       stage('Publish Test Results') {
+           steps {
+               junit '**TutorialNinjaProj/target/surefire-reports/*.xml'
            }
        }
    }
    post {
        always {
-           // Archive test results
-           junit 'TutorialNinjaProj/target/surefire-reports/*.xml'
-       }
-       success {
-           echo 'Build and tests executed successfully!'
-       }
-       failure {
-           echo 'Build or tests failed.'
+           archiveArtifacts artifacts: '**/target/*.jar', allowEmptyArchive: true
+           junit '**TutorialNinjaProj/target/surefire-reports/*.xml'
        }
    }
 }

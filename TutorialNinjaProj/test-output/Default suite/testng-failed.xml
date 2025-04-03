@@ -10,8 +10,8 @@
           <include name="verifyLoginWithValidCredentials"/>
           <include name="VerifyLoginWithoutCredentials"/>
           <include name="tearDown"/>
-          <include name="VerifyLoginWithValidEmailandInvalidPassword"/>
           <include name="tableDataFetch"/>
+          <include name="VerifyLoginWithValidEmailandInvalidPassword"/>
           <include name="setUp"/>
         </methods>
       </class> <!-- com.tutorialninja.qa.testcases.LoginTest -->

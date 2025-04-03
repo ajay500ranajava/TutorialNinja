@@ -56,7 +56,7 @@ public class Base {
 		}else if(browserName.equalsIgnoreCase("edge")) {
 			//driver=new EdgeDriver();    // for Edge Browser
 			
-			 String hubUrl = "http://http://65.2.186.123:4444/wd/hub";  // Replace <hub-ip> with your Hub IP address
+			 //String hubUrl = "http://65.2.186.123:4444/wd/hub";  // Replace <hub-ip> with your Hub IP address
 			 
 			
 			
@@ -65,8 +65,8 @@ public class Base {
 		       options.addArguments("--disable-gpu");
 		       options.addArguments("--no-sandbox");
 		       options.addArguments("--disable-dev-shm-usage");
-//		       driver = new EdgeDriver(options);
-			   driver = new RemoteWebDriver(new URL(hubUrl), options);
+	       driver = new EdgeDriver(options);
+			 //  driver = new RemoteWebDriver(new URL(hubUrl), options);
 		       
 		}else if(browserName.equalsIgnoreCase("safari")) {
 			driver=new SafariDriver();
