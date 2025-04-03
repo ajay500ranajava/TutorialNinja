@@ -1,45 +1,79 @@
 pipeline {
-   agent any
-   tools {
-       // Use the Maven version configured in Jenkins
-       maven 'maven3'
-       jdk 'jdk17'  // Use the JDK version configured in Jenkins
-   }
-   environment {
-       MVN_HOME = tool 'Maven'
-       JAVA_HOME = tool 'Eclipse Temurin'
-       PATH = "${JAVA_HOME}/bin:${PATH}"
-   }
-   stages {
-       stage('Clone Repository') {
-           steps {
-               git url: 'https://github.com/ajay500ranajava/TutorialNinja.git', branch: 'main'
-           }
-       }
-       stage('Build') {
-           steps {
-               script {
-                   sh "${MVN_HOME}/bin/mvn clean compile"
-               }
-           }
-       }
-       stage('Run Tests') {
-           steps {
-               script {
-                   sh "${MVN_HOME}/bin/mvn test"
-               }
-           }
-       }
-       stage('Publish Test Results') {
-           steps {
-               junit '**TutorialNinjaProj/target/surefire-reports/*.xml'
-           }
-       }
-   }
-   post {
-       always {
-           archiveArtifacts artifacts: '**/target/*.jar', allowEmptyArchive: true
-           junit '**TutorialNinjaProj/target/surefire-reports/*.xml'
-       }
-   }
-}
+
+    agent any
+
+    tools {
+
+        // Use the configured Maven and JDK in Jenkins
+
+        maven 'maven3'   // Name as configured in Jenkins
+
+        jdk 'jdk17'      // Name as configured in Jenkins
+
+    }
+
+    stages {
+
+        stage('Clone Repository') {
+
+            steps {
+
+                git url: 'https://github.com/ajay500ranajava/TutorialNinja.git', branch: 'main'
+
+            }
+
+        }
+
+        stage('Build') {
+
+            steps {
+
+                script {
+
+                    sh 'mvn clean compile'
+
+                }
+
+            }
+
+        }
+
+        stage('Run Tests') {
+
+            steps {
+
+                script {
+
+                    sh 'mvn test'
+
+                }
+
+            }
+
+        }
+
+        stage('Publish Test Results') {
+
+            steps {
+
+                junit '**/target/surefire-reports/*.xml'
+
+            }
+
+        }
+
+    }
+
+    post {
+
+        always {
+
+            archiveArtifacts artifacts: '**/target/*.jar', allowEmptyArchive: true
+
+            junit '**/target/surefire-reports/*.xml'
+
+        }
+
+    }
+
+} 
