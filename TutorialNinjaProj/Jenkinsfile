@@ -13,16 +13,21 @@ pipeline {
        stage('Build') {
            steps {
                script {
-                   // Navigate to the project directory before running the build
-                   sh 'cd TutorialNinjaProj && mvn clean compile'
+                   // Combine the change directory and maven commands in a single shell execution
+                   sh '''
+                       cd TutorialNinjaProj
+                       mvn clean compile
+                   '''
                }
            }
        }
        stage('Run Tests') {
            steps {
                script {
-                   // Navigate to the project directory before running tests
-                   sh 'cd TutorialNinjaProj && mvn test'
+                   sh '''
+                       cd TutorialNinjaProj
+                       mvn test
+                   '''
                }
            }
        }
