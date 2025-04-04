@@ -28,6 +28,7 @@ pipeline {
                        cd TutorialNinjaProj
                        mvn test
                    '''
+                   //again modified
                }
            }
        }

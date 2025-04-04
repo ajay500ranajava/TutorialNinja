@@ -184,6 +184,7 @@ public void	verifyLoginWithValidCredentials(String email, String password){
 		   System.out.println(ele.getText());
 		
 	}*/
+	   // login test cases updated
 	 
         	  
           }
