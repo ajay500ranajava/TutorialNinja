@@ -1,8 +1,8 @@
 pipeline {
    agent any
    tools {
-       maven 'maven3'   // Name as configured in Jenkins
-       jdk 'jdk17'      // Name as configured in Jenkins
+       maven 'maven3'   // Name from Global Tool Configuration
+       jdk 'jdk17'      // Name from Global Tool Configuration
    }
    stages {
        stage('Clone Repository') {
@@ -12,38 +12,28 @@ pipeline {
        }
        stage('Build') {
            steps {
-               script {
-                   // Combine the change directory and maven commands in a single shell execution
-                   sh '''
-                       cd TutorialNinjaProj
-                       mvn clean compile
-                   '''
+               dir('TutorialNinjaProj') {
+                   sh 'mvn clean compile'
                }
            }
        }
        stage('Run Tests') {
            steps {
-               script {
-                   sh '''
-                       cd TutorialNinjaProj
-                       mvn test
-                   '''
-                   //again modified
+               dir('TutorialNinjaProj') {
+                   sh 'mvn test'
                }
            }
        }
        stage('Publish Test Results') {
            steps {
-               junit '**/TutorialNinjaProj/target/surefire-reports/*.xml'
+               junit 'TutorialNinjaProj/target/surefire-reports/*.xml'
            }
        }
    }
    post {
        always {
-           archiveArtifacts artifacts: '**/TutorialNinjaProj/target/*.jar', allowEmptyArchive: true
-           junit '**/TutorialNinjaProj/target/surefire-reports/*.xml'
-           
-           //this is for demo
+           archiveArtifacts artifacts: 'TutorialNinjaProj/target/*.jar', allowEmptyArchive: true
+           junit 'TutorialNinjaProj/target/surefire-reports/*.xml'
        }
    }
 }
