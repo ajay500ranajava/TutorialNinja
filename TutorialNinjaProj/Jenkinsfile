@@ -34,6 +34,8 @@ pipeline {
        always {
            archiveArtifacts artifacts: 'TutorialNinjaProj/target/*.jar', allowEmptyArchive: true
            junit 'TutorialNinjaProj/target/surefire-reports/*.xml'
+           
+           // testing jenkins file
        }
    }
 }
